@@ -1,6 +1,9 @@
 on:
   workflow_call:
-    inputs: []
+    inputs: 
+      param:
+        type: string
+        required: false
 
 jobs:
   unit-tests:
