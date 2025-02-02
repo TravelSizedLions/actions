@@ -3,7 +3,7 @@ on:
     inputs: 
       param:
         type: string
-        required: false
+        required: false 
 
 jobs:
   unit-tests:
