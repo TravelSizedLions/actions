@@ -57,6 +57,6 @@ jobs:
       # --single-threaded-scene forces more predictable behavior for multi-threaded actions
       - name: Tests
         run: |
-          godot --headless --debug --path . --single-threaded-scene --script ./addons/test_drive/td.gd --no-only
+          godot --headless --debug --path . --single-threaded-scene --script ./addons/test-drive/src/cli/td.gd --no-only
           exit $?
         
