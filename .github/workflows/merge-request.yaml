@@ -2,6 +2,7 @@ name: Merge Request
 run-name: '#${{github.event.pull_request.number}}: "${{github.event.pull_request.title}}" [${{github.actor}}]'
 on:
   workflow_call:
+    inputs: []
 
 jobs:
   unit-tests:
