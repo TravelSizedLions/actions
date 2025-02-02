@@ -1,0 +1,60 @@
+name: Merge Request
+run-name: '#${{github.event.pull_request.number}}: "${{github.event.pull_request.title}}" [${{github.actor}}]'
+on:
+  workflow_call:
+
+jobs:
+  unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Install Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.4.0-beta.2
+          use-dotnet: false
+          include-templates: false
+
+      - name: Restore Addons
+        id: godotenv-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/dotnet/tools/godotenv
+            .addons
+          key: ${{ runner.os }}-godotenv-restore
+
+      - name: Setup GodotEnv
+        run: dotnet tool install --global Chickensoft.GodotEnv
+
+      - name: Install Addons
+        run: godotenv addons install
+
+      - name: Cache Addons
+        id: godotenv-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.dotnet/tools/godotenv
+            .addons
+          key: ${{ steps.godotenv-restore.outputs.cache-primary-key }}
+
+      # For some reason, custom classes and addons don't resolve automatically the first time you
+      # run godot. So --import does that manually...
+      - name: Project Import
+        run: godot --headless --path . --import
+
+      # --headless for obvious reasons
+      # --debug enables displaying stack traces on failed tests
+      # --path is the project path
+      # --single-threaded-scene forces more predictable behavior for multi-threaded actions
+      - name: Tests
+        run: |
+          godot --headless --debug --path . --single-threaded-scene --script ./addons/test_drive/td.gd --no-only
+          exit $?
+        
