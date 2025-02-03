@@ -1,4 +1,3 @@
-name: Bump Patch Version
 on:
   workflow_call:
 
