@@ -7,10 +7,22 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 
+      
+      - name: Cache dasel
+        id: cache-dasel
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-dasel
+        with:
+          path: /usr/bin/dasel
+          key: dasel-cache-key
 
       - name: Install dasel
-        run: sudo apt-get install -y dasel
+        if: ${{ steps.cache-dasel.outputs.cache-hit != 'true' }}
+        run: |
+          sudo apt-get install -y dasel
+          which dasel
 
       - name: Change Permissions
         run: |
