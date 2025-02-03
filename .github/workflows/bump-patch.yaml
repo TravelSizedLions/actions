@@ -47,7 +47,7 @@ jobs:
         run: cd $REPO && scripts/bump-patch.sh $REPO
 
       - name: Clean Up Scripts
-        run: rm -rf $REPO/scripts
+        run: sudo rm -rf $REPO/scripts
 
       - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
