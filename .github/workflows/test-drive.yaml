@@ -52,6 +52,7 @@ jobs:
       # --path is the project path
       # --single-threaded-scene forces more predictable behavior for multi-threaded actions
       - name: Tests
+        if: ${{ hashFiles('addons/test-drive/') != '' }}
         run: |
           godot --headless --debug --path . --single-threaded-scene --script ./addons/test-drive/src/cli/td.gd --no-only
           exit $?
