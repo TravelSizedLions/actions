@@ -18,8 +18,7 @@ jobs:
           repository: TravelSizedLions/actions
 
       - name: Copy Action Scripts
-        run: |
-          cp scripts ~/$REPO/scripts
+        run: cp -r scripts ~/$REPO/scripts
 
       - name: Cache dasel
         id: cache-dasel
