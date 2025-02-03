@@ -3,7 +3,7 @@ on:
 
 env:
   REPO: ${{ github.event.repository.name }}
-  REPO_PATH: ~/work/${{ github.event.repository.name }}
+  REPO_PATH: ~/${{ github.event.repository.name }}
 
 jobs:
   bump-version:
@@ -25,13 +25,10 @@ jobs:
       - name: Find Where the fetch everything is
         run: pwd
       - run: ls . -A
-        
-      - run: cd ~
-      - run: pwd
-      - run: ls . -A
 
-      - name: Copy Action Scripts
-        run: cp -r scripts $REPO_PATH/scripts
+      - run: cd $REPO
+      - run: ls . -A
+      - run: ls ../actions -A
 
       - name: Cache dasel
         id: cache-dasel
