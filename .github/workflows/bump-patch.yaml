@@ -52,5 +52,6 @@ jobs:
       - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          repository: ${{ env.REPO }}
           commit_message: "v${{ steps.bump.outputs.next_version }}"
           tagging_message: "v${{ steps.bump.outputs.next_version }}"
