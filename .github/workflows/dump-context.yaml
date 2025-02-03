@@ -1,0 +1,14 @@
+name: Github Environment
+on:
+  workflow_call:
+
+jobs:
+  dump:
+    name: Github Variables
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Dump Variables
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github)}}
+        shell: bash
+        run: echo "${GITHUB_CONTEXT}"
