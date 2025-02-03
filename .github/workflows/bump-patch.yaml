@@ -26,7 +26,7 @@ jobs:
         run: pwd
       - run: ls . -A
 
-      - run: cd $REPO
+      - run: cd ./$REPO && ls -A
       - run: ls . -A
       - run: ls ../actions -A
 
