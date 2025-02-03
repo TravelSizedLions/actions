@@ -11,23 +11,22 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Branch
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
+        with:
+          repository: $REPO
+          path: $REPO
 
       - name: Checkout Additional Scripts
         uses: actions/checkout@v4
         with:
           repository: TravelSizedLions/actions
+          path: actions
 
-      - name: Find Work folder
-        run: |
-          echo "ls ."
-          ls . -A
-          echo "ls .."
-          ls .. -A
-          echo "ls ../.."
-          ls ../.. -A
-          echo "~"
-          ls ~ -A
+      - name: Find Where the fetch everything is
+        run: pwd
+        
+      - run: cd ~
+      - run: ls . -A
 
       - name: Copy Action Scripts
         run: cp -r scripts $REPO_PATH/scripts
