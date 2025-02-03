@@ -22,13 +22,10 @@ jobs:
           repository: TravelSizedLions/actions
           path: actions
 
-      - name: Find Where the fetch everything is
-        run: pwd
-      - run: ls . -A
-
-      - run: cd ./$REPO && ls -A
-      - run: ls . -A
-      - run: ls ../actions -A
+      - name: Copy Scripts
+        run: |
+          sudo cp -r actions/scripts $REPO/scripts
+          find $REPO/scripts -name '*.sh' | xargs chmod +x
 
       - name: Cache dasel
         id: cache-dasel
@@ -47,12 +44,10 @@ jobs:
 
       - name: Bump Patch Version
         id: bump
-        run: |
-          chmod +x $REPO_PATH/scripts/bump-patch.sh
-          $REPO_PATH/scripts/bump-patch.sh $REPO
+        run: cd $REPO && scripts/bump-patch.sh $REPO
 
-      - name: Clean Up Action Scripts
-        run: rm -rf ~/$REPO_PATH/scripts
+      - name: Clean Up Scripts
+        run: rm -rf $REPO/scripts
 
       - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
