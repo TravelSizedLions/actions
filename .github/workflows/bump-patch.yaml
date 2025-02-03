@@ -1,6 +1,9 @@
 on:
   workflow_call:
 
+env:
+  REPO: ${{ github.event.repository.name }}
+
 jobs:
   bump-version:
     name: Bump Patch Version
@@ -9,10 +12,14 @@ jobs:
       - name: Checkout Branch
         uses: actions/checkout@v4 
 
-      - name: Checkout Addtional Scripts
+      - name: Checkout Additional Scripts
         uses: actions/checkout@v4
         with:
           repository: TravelSizedLions/actions
+
+      - name: Copy Action Scripts
+        run: |
+          cp scripts ~/$REPO/scripts
 
       - name: Cache dasel
         id: cache-dasel
@@ -32,9 +39,11 @@ jobs:
       - name: Bump Patch Version
         id: bump
         run: |
-          ls .. -A
-          chmod +x ./scripts/bump-patch.sh
-          ./scripts/bump-patch.sh ${{ github.event.repository.name }}
+          chmod +x ~/$REPO/scripts/bump-patch.sh
+          ~/$REPO/scripts/bump-patch.sh ${{ github.event.repository.name }}
+
+      - name: Clean Up Action Scripts
+        run: rm -rf ~/$REPO/scripts
 
       - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
