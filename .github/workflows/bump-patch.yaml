@@ -14,13 +14,13 @@ jobs:
         run: sudo apt-get install -y dasel
 
       - name: Change Permissions
-        run: chmod +x ./scripts/bump-version.sh
+        run: chmod +x ./scripts/bump-patch.sh
 
-      - name: Bump version
+      - name: Bump Patch Version
         id: bump
-        run: ./scripts/bump-version.sh ${{ github.event.repository.name }}
+        run: ./scripts/bump-patch.sh ${{ github.event.repository.name }}
 
-      - name: Push
+      - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "v${{ steps.bump.outputs.next_version }}"
