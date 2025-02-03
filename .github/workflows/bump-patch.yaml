@@ -24,8 +24,10 @@ jobs:
 
       - name: Find Where the fetch everything is
         run: pwd
+      - run: ls . -A
         
       - run: cd ~
+      - run: pwd
       - run: ls . -A
 
       - name: Copy Action Scripts
