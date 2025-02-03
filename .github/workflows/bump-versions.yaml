@@ -1,0 +1,27 @@
+name: Bump Patch Version
+on:
+  workflow_call:
+
+jobs:
+  bump-version:
+    name: Bump Patch Version
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dasel
+        run: sudo apt-get install -y dasel
+
+      - name: Change Permissions
+        run: chmod +x ./scripts/bump-version.sh
+
+      - name: Bump version
+        id: bump
+        run: ./scripts/bump-version.sh ${{ github.event.repository.name }}
+
+      - name: Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "v${{ steps.bump.outputs.next_version }}"
+          tagging_message: "v${{ steps.bump.outputs.next_version }}"
