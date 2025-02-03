@@ -25,7 +25,7 @@ jobs:
       - name: Copy Scripts
         run: |
           sudo cp -r actions/scripts $REPO/scripts
-          find $REPO/scripts -name '*.sh' | xargs chmod +x
+          find $REPO/scripts -name '*.sh' | xargs sudo chmod +x
 
       - name: Cache dasel
         id: cache-dasel
