@@ -18,7 +18,7 @@ jobs:
         id: cache-dasel
         uses: actions/cache@v4
         env:
-          cache-name: cache-dasel
+          cache-name: dasel-install
         with:
           path: /usr/bin/dasel
           key: dasel-cache-key
@@ -31,7 +31,9 @@ jobs:
 
       - name: Bump Patch Version
         id: bump
-        run: ./scripts/bump-patch.sh ${{ github.event.repository.name }}
+        run: |
+          chmod +x ./scripts/bump-patch.sh
+          ./scripts/bump-patch.sh ${{ github.event.repository.name }}
 
       - name: Tag & Push
         uses: stefanzweifel/git-auto-commit-action@v5
