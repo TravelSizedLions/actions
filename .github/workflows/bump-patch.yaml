@@ -13,8 +13,8 @@ jobs:
       - name: Checkout Branch
         uses: actions/checkout@v4
         with:
-          repository: $REPO
-          path: $REPO
+          repository: ${{ github.event.repository.name }}
+          path: ${{ github.event.repository.name }}
 
       - name: Checkout Additional Scripts
         uses: actions/checkout@v4
