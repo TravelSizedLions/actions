@@ -67,6 +67,10 @@ if [[ -e "$cfg_path" ]]; then
   dasel put -t string -v "$next_version" -f "$toml_path" -r toml "plugin.version" 
   mv "$toml_path" "$cfg_path"
 
+  # Godot does not like single quotes in the cfg file, so we swap them out.
+  temp=$(cat "$cfg_path" | tr \' \")
+  echo "$temp" > "$cfg_path"
+
   # Report.
   echo "Bumped plugin.cfg version: ${plugin_version} -> ${next_version}"
 fi
